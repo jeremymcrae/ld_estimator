@@ -28,6 +28,19 @@ def is_monomorphic(var):
 
 def lacks_haplotypes(counts, unknown):
     ''' check if the two variants lack some haplotypes
+
+    Even though monomorphic markers have been excluded, we need to check that
+    different haplotypoes are present. It is possible to lack certain haplotypes
+    if the genotypes with the minor allele are paired to genotypes with
+    genotypes with missing data.
+
+    e.g.
+    from ld_estimator.tallies import count_haplotypes
+    var1 = [(0,0), (0,0), (0,0), (1,1), (None,None)]
+    var2 = [(0,0), (0,0), (0,0), (None,None), (1,1)]
+    ploidy = [False] * len(var1)
+    counts, unknown = count_haplotypes(var1, var2, ploidy)
+    lacks_haplotypes(counts, unknown)
     '''
     r1 = counts.aa + counts.ab
     r2 = counts.ba + counts.bb
