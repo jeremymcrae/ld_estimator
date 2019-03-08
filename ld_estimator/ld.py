@@ -21,7 +21,7 @@ def estimate_ld(var1, var2, ploidy):
         return None
 
     known, unknown = count_haplotypes(var1, var2, ploidy)
-    if is_fully_linked(known, unknown):
+    if lacks_haplotypes(known, unknown):
         return LD(1, 0, 0, 0, 0, [0])
 
     pA1, pB1, pA2, pB2 = get_allele_freqs(known, unknown)

@@ -26,7 +26,7 @@ def is_monomorphic(var):
 
     return True
 
-def is_fully_linked(counts, unknown):
+def lacks_haplotypes(counts, unknown):
     ''' check if the two variants lack some haplotypes
     '''
     r1 = counts.aa + counts.ab
