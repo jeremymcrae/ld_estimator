@@ -7,7 +7,7 @@ from ld_estimator.dprime import get_d, get_denominator
 from ld_estimator.flip import flip_freqs
 from ld_estimator.linkage import LD
 from ld_estimator.af import get_allele_freqs
-from ld_estimator.utils import is_monomorphic, is_fully_linked
+from ld_estimator.utils import is_monomorphic, lacks_haplotypes
 
 def estimate_ld(var1, var2, ploidy):
     ''' compute linkage disequilibrium between two variants
