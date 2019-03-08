@@ -15,7 +15,7 @@ class TestLDEstimator(unittest.TestCase):
         ld = estimate_ld(var1, var2, is_haploid)
         self.assertEqual(ld.dprime, 0.9999999995259259)
         self.assertEqual(ld.r_squared, 0.7714285713447618)
-    
+
     def test_estimate_ld_low_dprime(self):
         ''' check estimate_ld works correctly for variants with low D'
         '''
@@ -33,7 +33,7 @@ class TestLDEstimator(unittest.TestCase):
         ld = estimate_ld(var1, var2, is_haploid)
         self.assertEqual(ld.dprime, 0.37448437109790317)
         self.assertEqual(ld.r_squared, 0.05227073010963888)
-    
+
     def test_estimate_ld_monomorphic(self):
         ''' test we don't compute LD with monomorphic markers
         '''
@@ -45,3 +45,14 @@ class TestLDEstimator(unittest.TestCase):
         # check it gives none even if only one marker is monomorphic
         var3 = [('G','A'), ('G','G'), ('G','G'), ('G','G'), ('G','G'), ('G','G')]
         self.assertIsNone(estimate_ld(var1, var3, is_haploid))
+
+    def test_lacks_haplotypes(self):
+        ''' test estimate_ld when missing some haplotypes
+        '''
+        var1 = [(0,0), (0,0), (0,0), (1,1), (None,None)]
+        var2 = [(0,0), (0,0), (0,0), (None,None), (1,1)]
+        is_haploid = [False] * len(var1)
+        ld = estimate_ld(var1, var2, is_haploid)
+        self.assertEqual(ld.dprime, 1)
+        self.assertEqual(ld.r_squared, 0)
+        self.assertEqual(ld.freqs, [0])
