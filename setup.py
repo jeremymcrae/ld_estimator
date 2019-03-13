@@ -1,6 +1,31 @@
 
+import sys
 import io
+import glob
 from setuptools import setup
+from distutils.core import Extension
+from Cython.Build import cythonize
+
+EXTRA_COMPILE_ARGS = ['-std=c++11']
+
+ext = cythonize([
+    Extension('ld_estimator.pairwise',
+        extra_compile_args=EXTRA_COMPILE_ARGS,
+        sources=['ld_estimator/core.pyx',
+            'src/ld.cpp',
+            'src/af.cpp',
+            'src/confidence.cpp',
+            'src/dprime.cpp',
+            'src/flip.cpp',
+            'src/frequencies.cpp',
+            'src/likelihoods.cpp',
+            'src/optimize.cpp',
+            'src/tallies.cpp',
+            'src/utils.cpp',
+            ],
+        include_dirs=['src/'],
+        language='c++')
+    ])
 
 setup(name="ld_estimator",
     description='Package for estimating linkage disequilibrium',
@@ -17,4 +42,5 @@ setup(name="ld_estimator",
         'Development Status :: 3 - Alpha',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
     ],
+    ext_modules=ext,
     test_suite='tests')
