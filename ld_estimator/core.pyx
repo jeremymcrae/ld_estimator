@@ -29,6 +29,10 @@ def to_bytes(var):
     return [list(map(str.encode, x)) for x in var]
 
 def pairwise_ld(var1, var2, vector[bool] ploidy):
-    ld = pairwise(to_bytes(var1), to_bytes(var2), ploidy)
+    try:
+        ld = pairwise(to_bytes(var1), to_bytes(var2), ploidy)
+    except ValueError:
+        return None
+    
     return LD(ld.dprime, ld.loglikelihood, ld.r_squared, ld.ci_low, ld.ci_high,
       [ld.freqs.aa, ld.freqs.ab, ld.freqs.ba, ld.freqs.bb])
