@@ -5,3 +5,4 @@ dist/
 *.eggs
 *.egg-info/
 ld_estimator/*.cpp
+ld_estimator/*.so
