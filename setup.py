@@ -11,7 +11,7 @@ EXTRA_COMPILE_ARGS = ['-std=c++11']
 ext = cythonize([
     Extension('ld_estimator.pairwise',
         extra_compile_args=EXTRA_COMPILE_ARGS,
-        sources=['ld_estimator/core.pyx',
+        sources=['ld_estimator/pairwise.pyx',
             'src/ld.cpp',
             'src/af.cpp',
             'src/confidence.cpp',
