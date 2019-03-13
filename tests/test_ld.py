@@ -57,4 +57,4 @@ class TestLDEstimator(unittest.TestCase):
         ld = pairwise_ld(var1, var2, is_haploid)
         self.assertEqual(ld.dprime, 1)
         self.assertEqual(ld.r_squared, 0)
-        self.assertEqual(ld.freqs, [0])
+        self.assertEqual(ld.freqs, [0, 0, 0, 0])
