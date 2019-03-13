@@ -25,8 +25,8 @@ cdef extern from 'linkage.h' namespace 'ld_estimator':
 cdef extern from 'ld.h' namespace 'ld_estimator':
     Linkage pairwise(vector[vector[string]], vector[vector[string]], vector[bool]) except +
 
-def to_bytes(var):
-    return [list(map(str.encode, x)) for x in var]
+cdef to_bytes(var):
+    return [[str(a).encode('utf8') for a in g] for g in var]
 
 def pairwise_ld(var1, var2, vector[bool] ploidy):
     try:
