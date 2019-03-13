@@ -18,10 +18,7 @@
 #include "linkage.h"
 
 namespace ld_estimator {
-  // template <typename T>
-  // double estimate_ld(std::vector<std::vector<T> > var1, std::vector<std::vector<T> > var2,
-  //   std::vector<bool> ploidy);
-  double estimate_ld(std::vector<std::vector<std::string> > var1,
+  Linkage pairwise(std::vector<std::vector<std::string> > var1,
     std::vector<std::vector<std::string> > var2,
     std::vector<bool> ploidy);
 }

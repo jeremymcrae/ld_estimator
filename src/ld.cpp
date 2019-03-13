@@ -3,8 +3,7 @@
 
 namespace ld_estimator {
 
-// template <typename T>
-double estimate_ld(std::vector<std::vector<std::string> > var1,
+Linkage pairwise(std::vector<std::vector<std::string> > var1,
     std::vector<std::vector<std::string> > var2,
     std::vector<bool> ploidy) {
   // compute linkage disequilibrium between two variants
@@ -21,8 +20,8 @@ double estimate_ld(std::vector<std::vector<std::string> > var1,
   Haps<int> known = counts.first;
   int unknown = counts.second;
   if (lacks_haplotypes(known, unknown)) {
-    return 0.0;
-    // return LD(1, 0, 0, 0, 0, Haps<double>(0, 0, 0, 0));
+    Haps<double> freqs = {0.0, 0.0, 0.0, 0.0};
+    return Linkage {1.0, 0.0, 0.0, 0.0, 0.0, freqs};
   }
 
   std::vector<double> f = get_allele_freqs(known, unknown);
@@ -47,8 +46,7 @@ double estimate_ld(std::vector<std::vector<std::string> > var1,
   auto low_ci = ci[0];
   auto high_ci = ci[1];
 
-  return rsq;
-  // return LD(d / denom, loglike1 - loglike0, rsq, low_ci, high_ci, freqs);
+  return Linkage {d / denom, loglike1 - loglike0, rsq, low_ci, high_ci, freqs};
 }
 
 }

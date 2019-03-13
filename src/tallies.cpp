@@ -4,8 +4,6 @@
 namespace ld_estimator {
 
 // template<typename T>
-// std::pair<Haps<int>, int> count_haplotypes(std::vector<std::vector<T> > var1,
-//     std::vector<std::vector<T> > var2, std::vector<bool> ploidy) {
 std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> > var1,
     std::vector<std::vector<std::string> > var2, std::vector<bool> ploidy) {
   // tally known haplotypes of known and unknown phase
@@ -29,8 +27,8 @@ std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> 
   slots[minor_1][minor_2] = 0;
 
   // iterate through all chromosomes in dataset
-  // for (a1, a2), (b1, b2), is_haploid in zip(var1, var2, ploidy):
-  for (int i=0; i < var1.size(); i++) {
+  int size = var1.size();
+  for (int i=0; i < size; i++) {
     std::string a1 = var1[i][0];
     std::string a2 = var1[i][1];
     std::string b1 = var2[i][0];

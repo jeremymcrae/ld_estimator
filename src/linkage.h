@@ -6,14 +6,13 @@
 #include "haps.h"
 
 namespace ld_estimator {
-  template <typename T>
-  struct LD {
+  struct Linkage {
     double dprime;
     double loglikelihood;
     double r_squared;
     double ci_low;
     double ci_high;
-    Haps<T> freqs;
+    Haps<double> freqs;
   };
 }
 
