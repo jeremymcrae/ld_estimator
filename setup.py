@@ -37,7 +37,7 @@ setup(name="ld_estimator",
     url='https://github.com/jeremymcrae/ld_estimator',
     license='MIT',
     packages=['ld_estimator'],
-    install_requires=[],
+    install_requires=['pysam'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
