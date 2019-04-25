@@ -2,6 +2,7 @@
 #define LD_ESTIMATOR_LINKAGE_H
 
 #include <vector>
+#include <string>
 
 #include "haps.h"
 
@@ -13,6 +14,7 @@ namespace ld_estimator {
     double ci_low;
     double ci_high;
     Haps<double> freqs;
+    std::vector<std::string> phase;
   };
 }
 

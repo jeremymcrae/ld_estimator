@@ -4,6 +4,7 @@ from itertools import combinations
 import pysam
 
 from ld_estimator import pairwise_ld
+from ld_estimator.pairwise import _is_monomorphic
 
 def region_ld(vcf, chrom, start, end, subset=None):
     ''' calculate LD within a genome region
@@ -31,21 +32,25 @@ def region_ld(vcf, chrom, start, end, subset=None):
         vcf.subset_samples(subset)
 
     lds = []
-    for v1, v2 in combinations(vcf.fetch(chrom, start, end), 2):
-        v1_geno = [v1.samples[x].alleles for x in v1.samples]
-        v2_geno = [v2.samples[x].alleles for x in v2.samples]
-        ploidy = [False] * len(v2_geno)
 
+    vars = []
+    for var in vcf.fetch(chrom, start, end):
+        geno = [var.samples[x].alleles for x in var.samples]
+        if _is_monomorphic(geno):
+            continue
+        vars.append((var, geno))
+
+    ploidy = [False] * len(vars[0][1])
+    for (v1, v1_geno), (v2, v2_geno) in combinations(vars, 2):
         data = {'chrom': chrom, 'var1_pos': v1.pos, 'var1_id': v1.id,
-            'var2_pos': v2.pos, 'var2_id': v2.id}
+            'var2_pos': v2.pos, 'var2_id': v2.id, 'r_squared': None,
+            'dprime': None, 'phase': None}
 
         ld = pairwise_ld(v1_geno, v2_geno, ploidy)
-        if ld is None:
-            data['r_squared'] = None
-            data['dprime'] = None
-        else:
+        if ld is not None:
             data['r_squared'] = ld.r_squared
             data['dprime'] = ld.dprime
+            data['phase'] = ld.phase
 
         lds.append(data)
 
