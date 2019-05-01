@@ -1,3 +1,5 @@
+''' class to store LD results
+'''
 
 class LD(object):
     ''' simple class to store linkage disequilibrium results

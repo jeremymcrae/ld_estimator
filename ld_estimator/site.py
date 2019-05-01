@@ -1,7 +1,7 @@
+''' provides function to calculate LD against a single site in a VCF
+'''
 
-import pysam
-
-from ld_estimator import pairwise_ld
+from ld_estimator.utils import prepare_vcf, check_ld
 
 def site_ld(vcf, chrom, pos, window=100000, subset=None):
     ''' calculate LD at one site to all surrounding variants
@@ -19,39 +19,23 @@ def site_ld(vcf, chrom, pos, window=100000, subset=None):
             r_squared and dprime] keys.
     '''
 
-    try:
-        vcf = pysam.VariantFile(vcf)
-    except AttributeError:
-        pass
-
-    if subset is not None:
-        subset = [x for x in subset if x in vcf.header.samples]
-        vcf.subset_samples(subset)
+    vcf = prepare_vcf(vcf, subset)
 
     variants = list(x for x in vcf.fetch(chrom, pos-1, pos) if x.pos == pos)
-    if len(variants) == 0:
+    if variants == []:
         raise ValueError(f'no variant found at: {chrom}:{pos}')
 
-    v1 = variants[0]
-    v1_geno = [v1.samples[x].alleles for x in v1.samples]
+    var1 = variants[0]
+    var1_geno = [var1.samples[x].alleles for x in var1.samples]
 
     lds = []
-    for v2 in vcf.fetch(chrom, pos - window, pos + window):
-        if v1 == v2:
+    for var2 in vcf.fetch(chrom, pos - window, pos + window):
+        if var1 == var2:
             continue
 
-        v2_geno = [v2.samples[x].alleles for x in v2.samples]
-        ploidy = [False] * len(v2_geno)
-
-        data = {'chrom': chrom, 'var1_pos': v1.pos, 'var1_id': v1.id,
-            'var2_pos': v2.pos, 'var2_id': v2.id, 'r_squared': None,
-            'dprime': None, 'phase': None}
-
-        ld = pairwise_ld(v1_geno, v2_geno, ploidy)
-        if ld is not None:
-            data['r_squared'] = ld.r_squared
-            data['dprime'] = ld.dprime
-            data['phase'] = ld.phase
+        var2_geno = [var2.samples[x].alleles for x in var2.samples]
+        ploidy = [False] * len(var2_geno)
+        data = check_ld(var1, var1_geno, var2, var2_geno, ploidy)
         lds.append(data)
 
     return lds
