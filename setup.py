@@ -2,8 +2,7 @@
 '''
 
 import io
-from distutils.core import Extension
-from setuptools import setup
+from setuptools import setup, Extension
 from Cython.Build import cythonize
 
 EXTRA_COMPILE_ARGS = ['-std=c++11']
