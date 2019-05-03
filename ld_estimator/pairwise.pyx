@@ -30,8 +30,14 @@ cdef to_bytes(var):
     return [[str(a).encode('utf8') for a in g] for g in var]
 
 def pairwise_ld(var1, var2, vector[bool] ploidy):
+    # only convert to allele vectors to bytes if not done already
+    if not isinstance(var1[0][0], bytes):
+        var1 = to_bytes(var1)
+    if not isinstance(var2[0][0], bytes):
+        var2 = to_bytes(var2)
+    
     try:
-        ld = pairwise(to_bytes(var1), to_bytes(var2), ploidy)
+        ld = pairwise(var1, var2, ploidy)
     except ValueError:
         return None
     

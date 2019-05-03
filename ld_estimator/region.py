@@ -31,6 +31,7 @@ def region_ld(vcf, chrom, start, end, subset=None):
         geno = [var.samples[x].alleles for x in var.samples]
         if _is_monomorphic(geno):
             continue
+        geno = [tuple(map(str.encode, x)) for x in geno]
         variants.append((var, geno))
 
     ploidy = [False] * len(variants[0][1])

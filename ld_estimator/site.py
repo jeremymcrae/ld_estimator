@@ -31,6 +31,7 @@ def site_ld(vcf, chrom, positions, window=100000, subset=None):
             raise ValueError(f'no variant found at: {chrom}:{pos}')
         var = entries[0]
         geno = [var.samples[x].alleles for x in var.samples]
+        geno = [tuple(map(str.encode, x)) for x in geno]
         variants.append([var, geno])
 
     lds = []
