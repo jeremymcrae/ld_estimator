@@ -3,17 +3,6 @@ language: python
 python:
   - 3.6
   - 3.7
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - libatlas-base-dev
-      - gfortran
-      - gcc-4.9
-      - g++-4.9
-env:
-    - CC=gcc-4.9 CXX=g++-4.9
 before_install:
  - pip install --upgrade pip setuptools wheel
  - pip install --only-binary=all cython coveralls
