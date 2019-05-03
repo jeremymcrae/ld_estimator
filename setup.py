@@ -37,6 +37,7 @@ setup(name="ld_estimator",
       license='MIT',
       packages=['ld_estimator'],
       install_requires=['pysam'],
+      python_requires='>3.6.0',
       classifiers=[
           'Development Status :: 3 - Alpha',
           'Topic :: Scientific/Engineering :: Bio-Informatics',
