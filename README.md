@@ -1,8 +1,9 @@
 ## ld_estimator: A package to estimate linkage disequilibrium
-Computes linkage disequilibrium. This uses the approach from
-[HaploView](https://github.com/jazzywhit/Haploview), just converted to python.
-The calculation is done in c++, so it's not too slow, can calculate ~5000 pairs
-per second.
+Computes linkage disequilibrium in python. This uses the maximum-likelihood of
+[Excoffier & Slatkin](https://doi.org/10.1093/oxfordjournals.molbev.a040269),
+just converted from [HaploView](https://github.com/jazzywhit/Haploview) to c++
+, with python bindings. It's not too slow, can calculate ~1000 pairs per
+second.
 
 ### Installation
 The simplest way to install ld_estimator is through pip:
@@ -32,6 +33,9 @@ ld = region_ld(vcf_path, chrom, start, end)
 from ld_estimator import site_ld
 vcf_path = 'PATH_TO_VCF'
 ld = site_ld(vcf_path, chrom, pos, window=200000)
+
+# can pass in multiple positions in the same region at once
+ld = site_ld(vcf_path, chrom, [pos2, pos2, pos3], window=200000)
 
 # both region_ld() and site_ld() can take a list of sample IDs to subset the
 # samples used for calculating LD. For example:
