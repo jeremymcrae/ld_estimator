@@ -1,0 +1,10 @@
+# ld_estimator code
+include MANIFEST.in
+include ld_estimator/*.cpp
+include ld_estimator/*.py
+include ld_estimator/*.pyx
+include src/*.h
+include src/*.cpp
+
+# ld_estimator tests
+include tests/*.py
