@@ -4,7 +4,6 @@ python:
   - 3.6
   - 3.7
 before_install:
- - pip install --upgrade pip setuptools wheel
  - pip install --only-binary=all cython coveralls
 install:
  - python setup.py install
