@@ -40,4 +40,8 @@ ld = site_ld(vcf_path, chrom, [pos2, pos2, pos3], window=200000)
 # both region_ld() and site_ld() can take a list of sample IDs to subset the
 # samples used for calculating LD. For example:
 ld = site_ld(vcf_path, chrom, pos, subset=['sample1', 'sample2'])
+
+# if the variant is on a sex chromosome, you'll have to pass in a list of sample
+# sexes (matching order of the subset IDs if present, otherwise the VCF samples)
+ld = site_ld(vcf_path, 'X', 20000000, sexes=['male', 'female'])
 ```
