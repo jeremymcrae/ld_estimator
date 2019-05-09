@@ -2,10 +2,13 @@
 '''
 
 import io
+import sys
 from setuptools import setup, Extension
 from Cython.Build import cythonize
 
 EXTRA_COMPILE_ARGS = ['-std=c++11']
+if sys.platform == "darwin":
+    EXTRA_COMPILE_ARGS += ["-stdlib=c++11"]
 
 EXT = cythonize([
     Extension('ld_estimator.pairwise',
@@ -30,7 +33,7 @@ setup(name="ld_estimator",
       description='Package for estimating linkage disequilibrium',
       long_description=io.open('README.md', encoding='utf-8').read(),
       long_description_content_type='text/markdown',
-      version="1.0.1",
+      version="1.0.2",
       author="Jeremy McRae",
       author_email="jmcrae@illumina.com",
       url='https://github.com/jeremymcrae/ld_estimator',
