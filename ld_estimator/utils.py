@@ -65,9 +65,10 @@ def prepare_vcf(vcf, chrom, pos, subset, sexes, build='grch37'):
 def check_ld(var1, var1_geno, var2, var2_geno, ploidy):
     ''' get a dictionary with variant coords and LD details
     '''
-    data = {'chrom': var1.chrom, 'var1_pos': var1.pos, 'var1_id': var1.id,
-            'var2_pos': var2.pos, 'var2_id': var2.id, 'r_squared': None,
-            'dprime': None, 'phase': None}
+    data = {'chrom': var1.chrom,
+            'var1': {'pos': var1.pos, 'id': var1.id, 'ref': var1.ref, 'alt': var1.alts[0]},
+            'var2': {'pos': var2.pos, 'id': var2.id, 'ref': var2.ref, 'alt': var2.alts[0]},
+            'r_squared': None, 'dprime': None, 'phase': None}
 
     linkage = pairwise_ld(var1_geno, var2_geno, ploidy)
     if linkage is not None:
