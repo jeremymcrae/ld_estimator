@@ -7,12 +7,15 @@ from setuptools import setup, Extension
 from Cython.Build import cythonize
 
 EXTRA_COMPILE_ARGS = ['-std=c++11']
+EXTRA_LINK_ARGS = []
 if sys.platform == "darwin":
-    EXTRA_COMPILE_ARGS += ["-stdlib=libc++"]
+    EXTRA_COMPILE_ARGS += ["-stdlib=libc++", "-mmacosx-version-min=10.9"]
+    EXTRA_LINK_ARGS += ["-stdlib=libc++", "-mmacosx-version-min=10.9"]
 
 EXT = cythonize([
     Extension('ld_estimator.pairwise',
               extra_compile_args=EXTRA_COMPILE_ARGS,
+              extra_link_args=EXTRA_LINK_ARGS,
               sources=['ld_estimator/pairwise.pyx',
                        'src/ld.cpp',
                        'src/af.cpp',
