@@ -44,17 +44,21 @@ def prepare_vcf(vcf, chrom, pos, subset, sexes, build='grch37'):
     if subset is not None:
         all_ids = set(vcf.header.samples)
         masked = [x in all_ids for x in subset]
-        sample_ids = [sample for x, sample in zip(masked, sample_ids) if x]
+        sample_ids = [sample for x, sample in zip(masked, subset) if x]
         sexes = [sample for x, sample in zip(masked, sexes) if x]
-        vcf.subset_samples(sample_ids)
+        try:
+            vcf.subset_samples(sample_ids)
+        except ValueError:
+            # can only subset once, check the sets match if done previously
+            assert all_ids == set(sample_ids)
     else:
         sample_ids = list(vcf.header.samples)
 
     # re-sort the sexes based on the VCF sample order, so that the ploidy list
     # later matches the genotypes order
     indexes = dict(zip(sample_ids, range(len(subset))))
-    sample_ids = [sample_ids[indexes[x]] for x in vcf.samples]
-    sexes = [sexes[indexes[x]] for x in vcf.samples]
+    sample_ids = [sample_ids[indexes[x]] for x in vcf.header.samples]
+    sexes = [sexes[indexes[x]] for x in vcf.header.samples]
 
     return vcf, get_ploidy(chrom, pos, sample_ids, sexes, build)
 
