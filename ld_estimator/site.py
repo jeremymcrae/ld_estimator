@@ -3,6 +3,20 @@
 
 from ld_estimator.utils import prepare_vcf, check_ld
 
+def get_intervals(positions, window):
+    ''' find windows of genomic regions for getting variants within.
+
+    This merges overlapping intervals
+    '''
+    intervals = []
+    for pos in sorted(positions):
+        if intervals and pos - window < intervals[-1][1]:
+            intervals[-1][1] = pos + window
+        else:
+            intervals.append([pos - window, pos + window])
+
+    return intervals
+
 def site_ld(vcf, chrom, positions, window=100000, subset=None, sexes=None, build='grch37'):
     ''' calculate LD at specified site/s to all surrounding variants
 
@@ -37,15 +51,14 @@ def site_ld(vcf, chrom, positions, window=100000, subset=None, sexes=None, build
         variants.append([var, geno])
 
     lds = []
-    for var2 in vcf.fetch(chrom, min(positions) - window, max(positions) + window):
-        var2_geno = [var2.samples[x].alleles for x in var2.samples]
-        for var1, var1_geno in variants:
-            if var1 == var2:
-                continue
-            if abs(var1.pos - var2.pos) > window:
-                continue
+    for (start, end) in get_intervals(positions, window):
+        for var2 in vcf.fetch(chrom, start, end):
+            var2_geno = [var2.samples[x].alleles for x in var2.samples]
+            for var1, var1_geno in variants:
+                if var1 == var2:
+                    continue
 
-            data = check_ld(var1, var1_geno, var2, var2_geno, ploidy)
-            lds.append(data)
+                data = check_ld(var1, var1_geno, var2, var2_geno, ploidy)
+                lds.append(data)
 
     return lds
