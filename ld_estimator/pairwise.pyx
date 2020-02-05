@@ -36,6 +36,11 @@ def pairwise_ld(var1, var2, vector[bool] ploidy):
     if not isinstance(var2[0][0], bytes):
         var2 = to_bytes(var2)
     
+    if len(var1) != len(var2):
+      raise ValueError('genotypes lists need to be the same length')
+    if len(var1) == 0:
+      raise ValueError('zero genotypes in lists supplied for LD')
+    
     try:
         ld = pairwise(var1, var2, ploidy)
     except ValueError:
