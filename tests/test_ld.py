@@ -40,6 +40,20 @@ class TestLDEstimator(unittest.TestCase):
         self.assertEqual(linkage.dprime, 0.37448437109790317)
         self.assertEqual(linkage.r_squared, 0.05227073010963888)
 
+    def test_pairwise_ld_haploid(self):
+        ''' check pairwise_ld can handle single entry genotypes
+        '''
+        var1 = [('G'), ('G'), ('A'), ('G', 'G'), ('G', 'A'),
+            ('G', 'G'), ('G', 'A'), ('G', 'G'), ('G', 'G'), ('G'), ('G', 'G')]
+        
+        var2 = [('G'), ('G'), ('A'), ('G', 'G'), ('G', 'G'),
+            ('G', 'G'), ('G', 'G'), ('G', 'G'), ('G', 'G'), ('G'), ('G', 'A')]
+        
+        is_haploid = [False] * len(var1)
+        linkage = pairwise_ld(var1, var2, is_haploid)
+        self.assertEqual(linkage.dprime, 0.5925925925925927)
+        self.assertEqual(linkage.r_squared, 0.24951267056530224)
+
     def test_pairwise_ld_monomorphic(self):
         ''' test we don't compute LD with monomorphic markers
         '''
