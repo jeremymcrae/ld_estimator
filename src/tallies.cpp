@@ -35,19 +35,17 @@ std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> 
   // iterate through all chromosomes in dataset
   int size = var1.size();
   for (int i=0; i < size; i++) {
+    a1 = var1[i][0];
+    b1 = var2[i][0];
     if (var1[i].size() == 2) {
-      a1 = var1[i][0];
       a2 = var1[i][1];
     } else {
-      a1 = var1[i][0];
       a2 = var1[i][0];
     }
     if (var2[i].size() == 2) {
-      b1 = var2[i][0];
       b2 = var2[i][1];
     } else {
       b1 = var2[i][0];
-      b2 = var2[i][0];
     }
     bool is_haploid = ploidy[i];
     if (!is_haploid) {
