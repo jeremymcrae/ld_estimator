@@ -126,4 +126,4 @@ def get_ploidy(chrom, pos, samples, sexes, build='grch37'):
         sex = sex.lower()
         assert sex in MALE_CODES or sex in FEMALE_CODES, f'unknown sex ({sex}) in {sample}'
 
-    return [sex.lower() in MALE_CODES for _, sex in sexes]
+    return [sex.lower() in MALE_CODES for sex in sexes]
