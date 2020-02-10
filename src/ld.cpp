@@ -16,12 +16,15 @@ Linkage pairwise(std::vector<std::vector<std::string> > var1,
     throw std::invalid_argument("monomorphic variant");
   }
   
+  std::vector<std::string> alleles1 = get_alleles(var1);
+  std::vector<std::string> alleles2 = get_alleles(var2);
+  std::vector<std::string> phase = {alleles1[0], alleles2[0]};
   std::pair<Haps<int>, int> counts = tally_haplotypes(var1, var2, ploidy);
   Haps<int> known = counts.first;
   int unknown = counts.second;
   if (lacks_haplotypes(known, unknown)) {
     Haps<double> freqs = {0.0, 0.0, 0.0, 0.0};
-    return Linkage {1.0, 0.0, 0.0, 0.0, 0.0, freqs};
+    return Linkage {1.0, 0.0, 0.0, 0.0, 0.0, freqs, phase};
   }
 
   std::vector<double> f = get_allele_freqs(known, unknown);
@@ -35,9 +38,6 @@ Linkage pairwise(std::vector<std::vector<std::string> > var1,
   double loglike0 = likelihood_null(known, pA1, pA2, pB1, pB2, unknown);
 
   double d = get_d(freqs);
-  std::vector<std::string> alleles1 = get_alleles(var1);
-  std::vector<std::string> alleles2 = get_alleles(var2);
-  std::vector<std::string> phase = {alleles1[0], alleles2[0]};
   if (d < 0) {
     flip_freqs(freqs, known, pA2, pB2, d);
     phase = {alleles1[0], alleles2[1]};
