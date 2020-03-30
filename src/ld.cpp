@@ -24,7 +24,7 @@ Linkage pairwise(std::vector<std::vector<std::string> > & var1,
   int unknown = counts.second;
   if (lacks_haplotypes(known, unknown)) {
     Haps<double> freqs = {0.0, 0.0, 0.0, 0.0};
-    return Linkage {1.0, 0.0, 0.0, 0.0, 0.0, freqs, phase};
+    return Linkage {1.0, 0.0, 0.0, freqs, phase};
   }
 
   std::vector<double> f = get_allele_freqs(known, unknown);
@@ -45,11 +45,7 @@ Linkage pairwise(std::vector<std::vector<std::string> > & var1,
   double denom = get_denominator(freqs);
 
   double rsq = (d * d) / (pA1 * (1.0 - pA1) * pA2 * (1.0 - pA2));
-  std::vector<double> surface = get_lsurface(pA1, pA2, pB1, denom, known, unknown);
-  std::vector<double> ci = ld_confidence_interval(surface, loglike1, 0.05);
-  auto low_ci = ci[0];
-  auto high_ci = ci[1];
-  return Linkage {d / denom, loglike1 - loglike0, rsq, low_ci, high_ci, freqs, phase};
+  return Linkage {d / denom, loglike1 - loglike0, rsq, freqs, phase};
 }
 
 }

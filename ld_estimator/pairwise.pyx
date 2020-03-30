@@ -18,8 +18,6 @@ cdef extern from 'linkage.h' namespace 'ld_estimator':
       double dprime
       double loglikelihood
       double r_squared
-      double ci_low
-      double ci_high
       Haps[double] freqs
       vector[string] phase
 
@@ -46,11 +44,11 @@ def pairwise_ld(var1, var2, vector[bool] ploidy):
     except ValueError:
         return None
     
-    return LD(ld.dprime, ld.loglikelihood, ld.r_squared, ld.ci_low, ld.ci_high,
+    return LD(ld.dprime, ld.loglikelihood, ld.r_squared,
       [ld.freqs.aa, ld.freqs.ab, ld.freqs.ba, ld.freqs.bb], [x.decode('utf8') for x in ld.phase])
 
 cdef extern from 'utils.h' namespace 'ld_estimator':
-    bool is_monomorphic(vector[vector[string]]) except +
+    bool is_monomorphic(vector[vector[string]] &) except +
 
 def _is_monomorphic(var):
   return is_monomorphic(to_bytes(var))

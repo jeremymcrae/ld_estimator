@@ -11,8 +11,6 @@ namespace ld_estimator {
     double dprime;
     double loglikelihood;
     double r_squared;
-    double ci_low;
-    double ci_high;
     Haps<double> freqs;
     std::vector<std::string> phase;
   };
