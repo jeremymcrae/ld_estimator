@@ -24,7 +24,7 @@ cdef extern from 'linkage.h' namespace 'ld_estimator':
       vector[string] phase
 
 cdef extern from 'ld.h' namespace 'ld_estimator':
-    Linkage pairwise(vector[vector[string]], vector[vector[string]], vector[bool]) except +
+    Linkage pairwise(vector[vector[string]] &, vector[vector[string]] &, vector[bool] &) except +
 
 cdef to_bytes(var):
     return [[str(a).encode('utf8') for a in g] for g in var]

@@ -11,9 +11,9 @@
 #include "haps.h"
 
 namespace ld_estimator {
-  bool is_monomorphic(std::vector<std::vector<std::string> > var);
+  bool is_monomorphic(std::vector<std::vector<std::string> > & var);
   bool lacks_haplotypes(Haps<int> counts, int unknown);
-  std::vector<std::string> get_alleles(std::vector<std::vector<std::string> > var);
+  std::vector<std::string> get_alleles(std::vector<std::vector<std::string> > & var);
 }
 
 #endif

@@ -4,7 +4,7 @@
 namespace ld_estimator {
 
 // template<typename T>
-bool is_monomorphic(std::vector<std::vector<std::string> > var){
+bool is_monomorphic(std::vector<std::vector<std::string> > & var){
   // check that a variant has two or more alleles
   std::set<std::string> alleles;
   for (auto geno : var) {
@@ -42,7 +42,7 @@ bool lacks_haplotypes(Haps<int> counts, int unknown) {
 }
 
 // template<typename T, typename A>
-std::vector<std::string> get_alleles(std::vector<std::vector<std::string> > var){
+std::vector<std::string> get_alleles(std::vector<std::vector<std::string> > & var){
   // get the major and minor alleles for a variant
   //
   // The minor allele is the second most common allele in the population.

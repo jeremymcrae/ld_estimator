@@ -3,9 +3,9 @@
 
 namespace ld_estimator {
 
-Linkage pairwise(std::vector<std::vector<std::string> > var1,
-    std::vector<std::vector<std::string> > var2,
-    std::vector<bool> ploidy) {
+Linkage pairwise(std::vector<std::vector<std::string> > & var1,
+    std::vector<std::vector<std::string> > & var2,
+    std::vector<bool> & ploidy) {
   // compute linkage disequilibrium between two variants
   //
   // Args:
