@@ -6,8 +6,8 @@
 #include "haps.h"
 
 namespace ld_estimator {
-  double get_d(Haps<double> freqs);
-  double get_denominator(Haps<double> freqs);
+  double get_d(Haps<double> & freqs);
+  double get_denominator(Haps<double> & freqs);
 }
 
 #endif

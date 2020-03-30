@@ -6,7 +6,7 @@
 #include <vector>
 
 namespace ld_estimator {
-  std::vector<double> ld_confidence_interval(std::vector<double> lsurface,
+  std::vector<double> ld_confidence_interval(std::vector<double> & lsurface,
     double loglike1, double alpha);
 }
 

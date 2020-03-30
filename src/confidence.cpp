@@ -3,7 +3,7 @@
 
 namespace ld_estimator {
 
-std::vector<double> ld_confidence_interval(std::vector<double> lsurface,
+std::vector<double> ld_confidence_interval(std::vector<double> & lsurface,
     double loglike1, double alpha=0.05) {
   // estimate confidence interval for D'
   double total = 0.0;

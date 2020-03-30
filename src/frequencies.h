@@ -6,8 +6,8 @@
 #include "haps.h"
 
 namespace ld_estimator {
-  Haps<double> count_haplotypes(int iteration, Haps<int> known, Haps<double> freqs, int unknown);
-  Haps<double> estimate_frequencies(Haps<double> counts, double prob);
+  Haps<double> count_haplotypes(int iteration, Haps<int> & known, Haps<double> & freqs, int unknown);
+  Haps<double> estimate_frequencies(Haps<double> & counts, double prob);
 }
 
 #endif

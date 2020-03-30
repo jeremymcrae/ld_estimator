@@ -17,7 +17,7 @@ bool is_monomorphic(std::vector<std::vector<std::string> > & var){
   return true;
 }
 
-bool lacks_haplotypes(Haps<int> counts, int unknown) {
+bool lacks_haplotypes(Haps<int> & counts, int unknown) {
   /* check if the two variants lack some haplotypes
 
   Even though monomorphic markers have been excluded, we need to check that

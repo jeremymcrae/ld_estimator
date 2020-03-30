@@ -8,7 +8,7 @@
 #include "haps.h"
 
 namespace ld_estimator {
-  Haps<double> get_frequencies(Haps<int> known, int unknown, double epsilon=0.00000001);
+  Haps<double> get_frequencies(Haps<int> & known, int unknown, double epsilon=0.00000001);
 }
 
 #endif

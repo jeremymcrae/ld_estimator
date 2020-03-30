@@ -3,7 +3,7 @@
 
 namespace ld_estimator {
 
-Haps<double> get_frequencies(Haps<int> known, int unknown, double epsilon) {
+Haps<double> get_frequencies(Haps<int> & known, int unknown, double epsilon) {
   // run expectation maximisation to get optimal haplotype frequencies
   Haps<double> initial = Haps<double> {0.01, 0.01, 0.01, 0.01};
   Haps<double> counts = count_haplotypes(0, known, initial, unknown);

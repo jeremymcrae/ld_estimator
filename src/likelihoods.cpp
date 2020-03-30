@@ -3,7 +3,7 @@
 
 namespace ld_estimator {
 
-double likelihood_freqs(Haps<int> known, Haps<double> freqs, int unknown) {
+double likelihood_freqs(Haps<int> & known, Haps<double> & freqs, int unknown) {
     // get loglikelihood for model from estimated haplotype frequencies
     double aa = freqs.aa;
     double ab = freqs.ab;
@@ -17,7 +17,7 @@ double likelihood_freqs(Haps<int> known, Haps<double> freqs, int unknown) {
       unknown * std::log(aa * bb + ab * ba)) / LN10;
 }
 
-double likelihood_null(Haps<int> known, double a1, double a2, double b1, double b2, int unknown) {
+double likelihood_null(Haps<int> & known, double a1, double a2, double b1, double b2, int unknown) {
   // get loglikelihood for null model from allele frequencies
   return (known.aa * std::log(a1 * a2) +
     known.ab * std::log(a1 * b2) +
@@ -27,7 +27,7 @@ double likelihood_null(Haps<int> known, double a1, double a2, double b1, double 
 }
 
 std::vector<double> get_lsurface(double pA1, double pA2, double pB1,
-    double denom, Haps<int> known, int unknown) {
+    double denom, Haps<int> & known, int unknown) {
   // get log likelihood surface
   std::vector<double> lsurface;
   for (int i=0; i < 100; i++) {

@@ -3,7 +3,7 @@
 
 namespace ld_estimator {
 
-Haps<double> count_haplotypes(int iteration, Haps<int> known, Haps<double> freqs, int unknown) {
+Haps<double> count_haplotypes(int iteration, Haps<int> & known, Haps<double> & freqs, int unknown) {
   // count haplotypes
   Haps<double> counts = Haps<double> {(double)known.aa, (double)known.ab, (double)known.ba, (double)known.bb};
   if (iteration > 0) {
@@ -18,7 +18,7 @@ Haps<double> count_haplotypes(int iteration, Haps<int> known, Haps<double> freqs
   return counts;
 }
 
-Haps<double> estimate_frequencies(Haps<double> counts, double prob) {
+Haps<double> estimate_frequencies(Haps<double> & counts, double prob) {
   // estimate haplotype frequencies from haplotype counts
   double total = (counts.aa + counts.ab + counts.ba + counts.bb) + (4.0 * prob);
 
