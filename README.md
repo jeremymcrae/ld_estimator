@@ -2,8 +2,8 @@
 Computes linkage disequilibrium in python. This uses the maximum-likelihood of
 [Excoffier & Slatkin](https://doi.org/10.1093/oxfordjournals.molbev.a040269),
 just converted from [HaploView](https://github.com/jazzywhit/Haploview) to c++
-, with python bindings. It's not too slow, can calculate ~1000 pairs per
-second.
+, with python bindings. It's not too slow, can calculate ~1500 pairs per
+second from the HapMap Phase 3 VCFs.
 
 ### Installation
 The simplest way to install ld_estimator is through pip:
