@@ -42,7 +42,7 @@ bool lacks_haplotypes(Haps<int> & counts, int unknown) {
 }
 
 // template<typename T, typename A>
-std::vector<std::string> get_alleles(std::vector<std::vector<std::string> > & var){
+void get_alleles(std::vector<std::vector<std::string> > & var, std::array<std::string, 2> & alleles){
   // get the major and minor alleles for a variant
   //
   // The minor allele is the second most common allele in the population.
@@ -68,8 +68,9 @@ std::vector<std::string> get_alleles(std::vector<std::vector<std::string> > & va
   {
       return a.second > b.second;
   });
-  
-  return std::vector<std::string> {pairs[0].first, pairs[1].first};
+
+  alleles[0] = pairs[0].first;
+  alleles[1] = pairs[1].first;
 }
 
 }

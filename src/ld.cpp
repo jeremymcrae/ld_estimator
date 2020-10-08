@@ -16,10 +16,12 @@ Linkage pairwise(std::vector<std::vector<std::string> > & var1,
     throw std::invalid_argument("monomorphic variant");
   }
   
-  std::vector<std::string> alleles1 = get_alleles(var1);
-  std::vector<std::string> alleles2 = get_alleles(var2);
+  std::array<std::string, 2> alleles1;
+  std::array<std::string, 2> alleles2;
+  get_alleles(var1, alleles1);
+  get_alleles(var2, alleles2);
   std::vector<std::string> phase = {alleles1[0], alleles2[0]};
-  std::pair<Haps<int>, int> counts = tally_haplotypes(var1, var2, ploidy);
+  std::pair<Haps<int>, int> counts = tally_haplotypes(var1, var2, ploidy, alleles1[0], alleles1[1], alleles2[0], alleles1[1]);
   Haps<int> known = counts.first;
   int unknown = counts.second;
   if (lacks_haplotypes(known, unknown)) {

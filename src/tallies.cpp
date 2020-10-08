@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <array>
 
 #include "tallies.h"
 
@@ -7,7 +8,8 @@ namespace ld_estimator {
 
 // template<typename T>
 std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> > & var1,
-    std::vector<std::vector<std::string> > & var2, std::vector<bool> & ploidy) {
+    std::vector<std::vector<std::string> > & var2, std::vector<bool> & ploidy,
+    std::string major_1, std::string minor_1, std::string major_2, std::string minor_2) {
   // tally known haplotypes of known and unknown phase
   //
   // Args:
@@ -15,13 +17,6 @@ std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> 
   //     var2: list of genotypes for second variant, ordered as per var1
   //     ploidy: list of ploidy states, ordered as per var1
   int unknown = 0;
-  std::vector<std::string> alleles = get_alleles(var1);
-  std::string major_1 = alleles[0];
-  std::string minor_1 = alleles[1];
-  alleles = get_alleles(var2);
-  std::string major_2 = alleles[0];
-  std::string minor_2 = alleles[1];
-  
   std::map<std::string, std::map<std::string, int>> slots;
   slots[major_1][major_2] = 0;
   slots[major_1][minor_2] = 0;
