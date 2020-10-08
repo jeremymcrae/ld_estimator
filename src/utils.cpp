@@ -1,4 +1,6 @@
 
+#include <set>
+
 #include "utils.h"
 
 namespace ld_estimator {
@@ -41,6 +43,21 @@ bool lacks_haplotypes(Haps<int> & counts, int unknown) {
   return (r1 == 0 or r2 == 0 or c1 == 0 or c2 == 0) and unknown == 0;
 }
 
+// Comparison function for sorting the set by decreasing order of its pair's
+// second value
+struct revcomp {
+  template <typename T>
+
+  // Comparator function
+  bool operator()(const T &l, const T &r) const
+  {
+    if (l.second != r.second)  {
+      return l.second > r.second;
+    }
+    return l.first < r.first;
+  }
+};
+
 // template<typename T, typename A>
 void get_alleles(std::vector<std::vector<std::string> > & var, std::array<std::string, 2> & alleles){
   // get the major and minor alleles for a variant
@@ -49,28 +66,21 @@ void get_alleles(std::vector<std::vector<std::string> > & var, std::array<std::s
   // We've previously excluded non-polymorphic sites, so the variant has at
   // least two alleles.
   std::map<std::string, int> counts;
-  for (auto geno : var) {
-    for (auto allele : geno) {
+  for (auto & geno : var) {
+    for (auto & allele : geno) {
       if (counts.find(allele) == counts.end()){
         counts[allele] = 0;
       }
       counts[allele] += 1;
     }
   }
-  
-  // create a vector of pairs, then sort the vector by the allele counts in
-  // descending order
-  std::vector<std::pair<std::string, int> > pairs;
-  for (auto itr = counts.begin(); itr != counts.end(); ++itr){
-      pairs.push_back(*itr);
-  }
-  std::sort(pairs.begin(), pairs.end(), [=](std::pair<std::string, int> a, std::pair<std::string, int> b)
-  {
-      return a.second > b.second;
-  });
 
-  alleles[0] = pairs[0].first;
-  alleles[1] = pairs[1].first;
+  std::set<std::pair<std::string, int>, revcomp> pairs(counts.begin(), counts.end());
+
+  auto it = pairs.begin();
+  alleles[0] = (*it).first;
+  std::advance(it, 1);
+  alleles[1] = (*it).first;
 }
 
 }
