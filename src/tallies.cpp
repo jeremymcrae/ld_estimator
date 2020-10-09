@@ -62,7 +62,7 @@ std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::string> & a1s, std::
     else {
       a2 = a2s[i];
       // include haploid chromosomes
-      if (a1.empty() & a2.empty()) {
+      if (!a1.empty() & !a2.empty()) {
         slots[a1][b1] += 1;
       }
     }
