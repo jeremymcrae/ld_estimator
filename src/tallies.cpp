@@ -7,8 +7,8 @@
 namespace ld_estimator {
 
 // template<typename T>
-std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> > & var1,
-    std::vector<std::vector<std::string> > & var2, std::vector<bool> & ploidy,
+std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::string> & a1s, std::vector<std::string> & a2s,
+    std::vector<std::string> & b1s, std::vector<std::string> & b2s, std::vector<bool> & ploidy,
     std::string major_1, std::string minor_1, std::string major_2, std::string minor_2) {
   // tally known haplotypes of known and unknown phase
   //
@@ -29,13 +29,13 @@ std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> 
   std::string b2;
   // bool is_haploid;
   // iterate through all chromosomes in dataset
-  int size = var1.size();
+  int size = a1s.size();
   for (int i=0; i < size; i++) {
-    a1 = var1[i][0];
-    b1 = var2[i][0];
+    a1 = a1s[i];
+    b1 = b1s[i];
     if (!ploidy[i]) {
-      a2 = var1[i].back();
-      b2 = var2[i].back();
+      a2 = a2s[i];
+      b2 = b2s[i];
       if (a1.empty() || a2.empty() || b1.empty() || b2.empty()) {
         // skip missing data
         continue;
@@ -60,9 +60,9 @@ std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> 
       }
     }
     else {
-      a2 = var1[i].back();
+      a2 = a2s[i];
       // include haploid chromosomes
-      if (a1 != "None" and a2 != "None") {
+      if (a1.empty() & a2.empty()) {
         slots[a1][b1] += 1;
       }
     }

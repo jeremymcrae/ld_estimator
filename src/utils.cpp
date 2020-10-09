@@ -6,12 +6,13 @@
 namespace ld_estimator {
 
 // template<typename T>
-bool is_monomorphic(std::vector<std::vector<std::string> > & var){
+bool is_monomorphic(std::vector<std::string> & a1, std::vector<std::string> & a2){
   // check that a variant has two or more alleles
   std::set<std::string> alleles;
-  for (auto geno : var) {
-    std::set<std::string> genoset(geno.begin(), geno.end());
-    alleles.insert(genoset.begin(), genoset.end());
+  uint size = a1.size();
+  for (uint i=0; i < size; i++) {
+    alleles.insert(a1[i]);
+    alleles.insert(a2[i]);
     if (alleles.size() > 1) {
       return false;
     }
@@ -59,20 +60,24 @@ struct revcomp {
 };
 
 // template<typename T, typename A>
-void get_alleles(std::vector<std::vector<std::string> > & var, std::array<std::string, 2> & alleles){
+void get_alleles(std::vector<std::string> & a1, std::vector<std::string> & a2, std::array<std::string, 2> & alleles){
   // get the major and minor alleles for a variant
   //
   // The minor allele is the second most common allele in the population.
   // We've previously excluded non-polymorphic sites, so the variant has at
   // least two alleles.
   std::map<std::string, int> counts;
-  for (auto & geno : var) {
-    for (auto & allele : geno) {
+  for (auto & allele : a1) {
       if (counts.find(allele) == counts.end()){
         counts[allele] = 0;
       }
       counts[allele] += 1;
-    }
+  }
+  for (auto & allele : a2) {
+      if (counts.find(allele) == counts.end()){
+        counts[allele] = 0;
+      }
+      counts[allele] += 1;
   }
 
   std::set<std::pair<std::string, int>, revcomp> pairs(counts.begin(), counts.end());

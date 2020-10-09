@@ -6,7 +6,16 @@
 #include "haps.h"
 
 namespace ld_estimator {
-  std::vector<double> get_allele_freqs(Haps<int> known, double unknown);
+
+struct Freqs {
+  double A1;
+  double A2;
+  double B1;
+  double B2;
+};
+
+Freqs get_allele_freqs(Haps<int> known, double unknown);
+
 }
 
 #endif
