@@ -14,12 +14,15 @@ cdef extern from 'haps.h' namespace 'ld_estimator':
       T bb
 
 cdef extern from 'linkage.h' namespace 'ld_estimator':
+  cdef struct Phase:
+      string var1_allele
+      string var2_allele
   cdef struct Linkage:
       double dprime
       double loglikelihood
       double r_squared
       Haps[double] freqs
-      vector[string] phase
+      Phase phase
 
 cdef extern from 'ld.h' namespace 'ld_estimator':
     Linkage pairwise(vector[vector[string]] &, vector[vector[string]] &, vector[bool] &) except +
@@ -45,7 +48,7 @@ def pairwise_ld(var1, var2, vector[bool] ploidy):
         return None
     
     return LD(ld.dprime, ld.loglikelihood, ld.r_squared,
-      [ld.freqs.aa, ld.freqs.ab, ld.freqs.ba, ld.freqs.bb], [x.decode('utf8') for x in ld.phase])
+      [ld.freqs.aa, ld.freqs.ab, ld.freqs.ba, ld.freqs.bb], [ld.phase.var1_allele.decode('utf8'), ld.phase.var2_allele.decode('utf8')])
 
 cdef extern from 'utils.h' namespace 'ld_estimator':
     bool is_monomorphic(vector[vector[string]] &) except +
