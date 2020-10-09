@@ -9,8 +9,8 @@ namespace ld_estimator {
 
 struct Freqs {
   double A1;
-  double A2;
   double B1;
+  double A2;
   double B2;
 };
 
