@@ -27,15 +27,16 @@ std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> 
   std::string a2;
   std::string b1;
   std::string b2;
+  bool is_haploid;
   // iterate through all chromosomes in dataset
   int size = var1.size();
   for (int i=0; i < size; i++) {
-    a1 = var1[i].front();
-    a2 = var1[i].back();
-    b1 = var2[i].front();
-    b2 = var2[i].back();
-    bool is_haploid = ploidy[i];
+    a1 = var1[i][0];
+    b1 = var2[i][0];
+    is_haploid = ploidy[i];
     if (!is_haploid) {
+      a2 = var1[i].back();
+      b2 = var2[i].back();
       if (a1 == "None" or a2 == "None" or b1 == "None" or b2 == "None") {
         // skip missing data
         continue;
@@ -60,6 +61,7 @@ std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> 
       }
     }
     else {
+      a2 = var1[i].back();
       // include haploid chromosomes
       if (a1 != "None" and a2 != "None") {
         slots[a1][b1] += 1;
