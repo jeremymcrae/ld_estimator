@@ -37,7 +37,7 @@ std::pair<Haps<int>, int> tally_haplotypes(std::vector<std::vector<std::string> 
     if (!is_haploid) {
       a2 = var1[i].back();
       b2 = var2[i].back();
-      if (a1 == "None" or a2 == "None" or b1 == "None" or b2 == "None") {
+      if (a1.empty() || a2.empty() || b1.empty() || b2.empty()) {
         // skip missing data
         continue;
       }

@@ -28,7 +28,7 @@ cdef extern from 'ld.h' namespace 'ld_estimator':
     Linkage pairwise(vector[vector[string]] &, vector[vector[string]] &, vector[bool] &) except +
 
 cdef to_bytes(var):
-    return [[str(a).encode('utf8') for a in g] for g in var]
+    return [[str(a).encode('utf8') if a is not None else b'' for a in g] for g in var]
 
 def pairwise_ld(var1, var2, vector[bool] ploidy):
     # only convert to allele vectors to bytes if not done already
