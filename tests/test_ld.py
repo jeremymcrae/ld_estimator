@@ -69,7 +69,7 @@ class TestLDEstimator(unittest.TestCase):
     def test_lacks_haplotypes(self):
         ''' test pairwise_ld when missing some haplotypes
         '''
-        var1 = [('0', '0'), ('0', '0'), ('0', '0'), ('1', '1'), (None, None)]
+        var1 = [('0', '0'), ('0', '0'), ('0', '0'), ('1', '1'), (None, '1')]
         var2 = [('0', '0'), ('0', '0'), ('0', '0'), (None, None), ('1', '1')]
         is_haploid = [False] * len(var1)
         linkage = pairwise_ld(var1, var2, is_haploid)
