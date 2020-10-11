@@ -18,10 +18,9 @@
 #include "linkage.h"
 
 namespace ld_estimator {
-  Linkage pairwise(
-    std::vector<std::string> & var_a1, std::vector<std::string> & var_a2,
-    std::vector<std::string> & var_b1, std::vector<std::string> & var_b2,
-    std::vector<bool> & ploidy);
+
+Linkage pairwise(char ** a1s, char ** a2s, char ** b1s, char ** b2s, int size, std::vector<bool> & ploidy);
+
 }
 
 #endif

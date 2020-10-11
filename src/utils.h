@@ -12,9 +12,9 @@
 #include "haps.h"
 
 namespace ld_estimator {
-  bool is_monomorphic(std::vector<std::string> & a1, std::vector<std::string> & a2);
+  bool is_monomorphic(char ** a1, char ** a2, int size);
   bool lacks_haplotypes(Haps<int> & counts, int unknown);
-  void get_alleles(std::vector<std::string> & a1, std::vector<std::string> & a2, std::array<std::string, 2> & alleles);
+  void get_alleles(char ** a1, char ** a2, int size, std::array<const char *, 2> & alleles);
 }
 
 #endif

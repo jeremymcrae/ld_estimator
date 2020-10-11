@@ -3,26 +3,23 @@
 
 namespace ld_estimator {
 
-Linkage pairwise(
-    std::vector<std::string> & var_a1, std::vector<std::string> & var_a2,
-    std::vector<std::string> & var_b1, std::vector<std::string> & var_b2,
-    std::vector<bool> & ploidy) {
+Linkage pairwise(char ** a1s, char ** a2s, char ** b1s, char ** b2s, int size, std::vector<bool> & ploidy) {
   // compute linkage disequilibrium between two variants
   //
   // Args:
   //     var1: list of genotypes for first variant
   //     var2: list of genotypes for second variant, ordered as per var1
   //     ploidy: list of ploidy states, ordered as per var1
-  if (is_monomorphic(var_a1, var_a2) or is_monomorphic(var_b1, var_b2)) {
+  if (is_monomorphic(a1s, a2s, size) or is_monomorphic(b1s, b2s, size)) {
     throw std::invalid_argument("monomorphic variant");
   }
   
-  std::array<std::string, 2> alleles1;
-  std::array<std::string, 2> alleles2;
-  get_alleles(var_a1, var_a2, alleles1);
-  get_alleles(var_b1, var_b2, alleles2);
-  Phase phase = {alleles1[0], alleles2[0]};
-  std::pair<Haps<int>, int> counts = tally_haplotypes(var_a1, var_a2, var_b1, var_b2, ploidy, alleles1[0], alleles1[1], alleles2[0], alleles1[1]);
+  std::array<const char *, 2> alleles1;
+  std::array<const char *, 2> alleles2;
+  get_alleles(a1s, a2s, size, alleles1);
+  get_alleles(b1s, b2s, size, alleles2);
+  Phase phase = {std::string(alleles1[0]), std::string(alleles2[0])};
+  std::pair<Haps<int>, int> counts = tally_haplotypes(a1s, a2s, b1s, b2s, size, ploidy, alleles1[0], alleles1[1], alleles2[0], alleles1[1]);
   Haps<int> known = counts.first;
   int unknown = counts.second;
   if (lacks_haplotypes(known, unknown)) {
