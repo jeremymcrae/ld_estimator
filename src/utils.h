@@ -14,7 +14,7 @@
 namespace ld_estimator {
   bool is_monomorphic(char ** a1, char ** a2, int size);
   bool lacks_haplotypes(Haps<int> & counts, int unknown);
-  void get_alleles(char ** a1, char ** a2, int size, std::array<const char *, 2> & alleles);
+  void get_alleles(char ** a1, char ** a2, int size, std::vector<bool> & haploid, std::array<const char *, 2> & alleles);
 }
 
 #endif

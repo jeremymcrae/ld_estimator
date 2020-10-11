@@ -16,8 +16,9 @@ Linkage pairwise(char ** a1s, char ** a2s, char ** b1s, char ** b2s, int size, s
   
   std::array<const char *, 2> alleles1;
   std::array<const char *, 2> alleles2;
-  get_alleles(a1s, a2s, size, alleles1);
-  get_alleles(b1s, b2s, size, alleles2);
+  get_alleles(a1s, a2s, size, ploidy, alleles1);
+  get_alleles(b1s, b2s, size, ploidy, alleles2);
+  
   Phase phase = {std::string(alleles1[0]), std::string(alleles2[0])};
   std::pair<Haps<int>, int> counts = tally_haplotypes(a1s, a2s, b1s, b2s, size, ploidy, alleles1[0], alleles1[1], alleles2[0], alleles1[1]);
   Haps<int> known = counts.first;

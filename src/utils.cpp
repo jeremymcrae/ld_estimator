@@ -59,7 +59,7 @@ struct revcomp {
 };
 
 // template<typename T, typename A>
-void get_alleles(char ** a1, char ** a2, int size, std::array<const char *, 2> & alleles){
+void get_alleles(char ** a1, char ** a2, int size, std::vector<bool> & haploid, std::array<const char *, 2> & alleles){
   // get the major and minor alleles for a variant
   //
   // The minor allele is the second most common allele in the population.
@@ -73,6 +73,10 @@ void get_alleles(char ** a1, char ** a2, int size, std::array<const char *, 2> &
       counts[a1[i]] += 1;
   }
   for (int i=0; i < size; i++) {
+      if (haploid[i]) {
+        // if the sample is haploid, don't consider the second allele
+        continue;
+      }
       if (counts.find(a2[i]) == counts.end()){
         counts[a2[i]] = 0;
       }
