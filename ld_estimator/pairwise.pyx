@@ -86,6 +86,8 @@ cdef extern from 'utils.h' namespace 'ld_estimator':
     bool is_monomorphic(char **a1, char **a2, int size) except +
 
 def _is_monomorphic(var):
+    if not isinstance(var[0][0], bytes):
+        var = to_bytes(var)
     cdef char **a1 = <char **>malloc(len(var) * sizeof(char *))
     cdef char **a2 = <char **>malloc(len(var) * sizeof(char *))
     to_cstring_array(var, a1, a2, 0, -1)
