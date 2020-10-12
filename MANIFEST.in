@@ -1,5 +1,6 @@
 # ld_estimator code
 include MANIFEST.in
+include pyproject.toml
 include ld_estimator/*.cpp
 include ld_estimator/*.py
 include ld_estimator/*.pyx
