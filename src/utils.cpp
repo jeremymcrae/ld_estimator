@@ -67,18 +67,12 @@ void get_alleles(char ** a1, char ** a2, int size, std::vector<bool> & haploid, 
   // least two alleles.
   std::map<const char *, int> counts;
   for (int i=0; i < size; i++) {
-      if (counts.find(a1[i]) == counts.end()){
-        counts[a1[i]] = 0;
-      }
       counts[a1[i]] += 1;
   }
   for (int i=0; i < size; i++) {
       if (haploid[i]) {
         // if the sample is haploid, don't consider the second allele
         continue;
-      }
-      if (counts.find(a2[i]) == counts.end()){
-        counts[a2[i]] = 0;
       }
       counts[a2[i]] += 1;
   }

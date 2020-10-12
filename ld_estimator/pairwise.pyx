@@ -38,7 +38,7 @@ cdef to_cstring_array(list_str, char ** a1, char ** a2, idx1, idx2):
         a1[i] = x[idx1]
         a2[i] = x[idx2]
 
-def pairwise_ld(var1, var2, vector[bool] ploidy):
+def pairwise_ld(var1, var2, ploidy):
     ''' check LD for pair of variants
 
     Args:
