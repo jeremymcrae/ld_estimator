@@ -17,6 +17,15 @@ def get_intervals(positions, window):
 
     return intervals
 
+def encode_genotypes(geno):
+    ''' encodes genotypes as bytes, to prevent duplicated effort
+    '''
+    try:
+        return [tuple(map(str.encode, x)) for x in geno]
+    except TypeError:
+        # TODO: fix for missing genotypes!
+        return geno
+
 def site_ld(vcf, chrom, positions, window=100000, subset=None, sexes=None, build='grch37'):
     ''' calculate LD at specified site/s to all surrounding variants
 
@@ -47,17 +56,13 @@ def site_ld(vcf, chrom, positions, window=100000, subset=None, sexes=None, build
             raise ValueError(f'no variant found at: {chrom}:{pos}')
         var = entries[0]
         geno = [var.samples[x].alleles for x in var.samples]
-        try:
-            geno = [tuple(map(str.encode, x)) for x in geno]
-        except TypeError:
-            # TODO: fix for missing genotypes!
-            continue
-        variants.append([var, geno])
+        variants.append([var, encode_genotypes(geno)])
 
     lds = []
     for (start, end) in get_intervals(positions, window):
         for var2 in vcf.fetch(chrom, start, end):
             var2_geno = [var2.samples[x].alleles for x in var2.samples]
+            var2_geno = encode_genotypes(var2_geno)
             for var1, var1_geno in variants:
                 if var1 == var2:
                     continue
