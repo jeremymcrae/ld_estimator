@@ -1,4 +1,4 @@
-# cython: language_level=3, boundscheck=False
+# cython: language_level=3, boundscheck=False, emit_linenums=True
 
 from libc.stdlib cimport malloc, free
 from libcpp.string cimport string
@@ -73,11 +73,11 @@ def pairwise_ld(var1, var2, ploidy):
         ld = pairwise(a1, a2, b1, b2, len(var1), ploidy)
     except ValueError:
         return None
-
-    free(a1)
-    free(a2)
-    free(b1)
-    free(b2)
+    finally:
+        free(a1)
+        free(a2)
+        free(b1)
+        free(b2)
 
     return LD(ld.dprime, ld.loglikelihood, ld.r_squared,
       [ld.freqs.aa, ld.freqs.ab, ld.freqs.ba, ld.freqs.bb], [ld.phase.var1_allele.decode('utf8'), ld.phase.var2_allele.decode('utf8')])
